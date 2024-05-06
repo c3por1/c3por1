@@ -1,4 +1,5 @@
 - 👋 Hi, I’m @c3por1
+  
   Thank you for visiting my github! I am passionate and curious about learning coding skills in general. Graduating from Lakeland University on December 2023, I work full-time as a deployment technician in Milwaukee, the United States. I am intended to use this service as my portfolio. Nice to see you!
 - 👀 I’m interested in ...
   Major programming languages, such as C++, Python,
