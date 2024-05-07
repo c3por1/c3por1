@@ -1,1 +1,138 @@
+import time
+from tkinter import *     # from tkinter import all
+from tkinter import filedialog
+
+class Node:
+    def __init__(self, song, singer):
+        self.song = song
+        self.singer = singer
+        self.next = None
+
+class SongList:
+    def __init__(self):
+        self.head = None
+
+    def display(self):
+        if self.head is None:
+            print("No songs found.")
+        else:
+            current = self.head
+            while current is not None:
+                print(f"{current.song} by {current.singer}")
+                current = current.next
+
+    def add_song(self, song, singer):
+        new_node = Node(song, singer)
+        new_node.next = self.head
+        self.head = new_node
+        print(f"Added {song} by {singer}")
+
+    def search_song(self, song):
+        current = self.head
+        while current is not None:
+            if current.song == song:
+                print(f"{song} by {current.singer}")
+                print('1. Play this song \n2. Search another song')
+                select = input('Select an option: ')
+                if select == '1':
+                    current.song == song
+                    SongList.play_song(self, song)
+                elif select == '2':
+                    seach = input('Enter a song name: ')
+                    if current.song == seach:
+                        print(f"{seach} by {current.singer}")
+                    elif current.song != seach:
+                        print('No songs found.')
+                return
+            current = current.next
+        print("Song not found.")
+
+    def play_song(self, song):
+        current = self.head
+        while current is not None:
+            if current.song == song:
+                print(f"{song} by {current.singer}")
+                print('Select the text file with the song name you want to play.')
+                win=Tk()
+                win.title("Lyrics file opener")
+
+                # Set the geometry of the window
+                win.geometry("700x300")
+
+                # Create a label
+                Label(win, text="Click the button to open a dialog", font='Arial 16 bold').pack(pady=15)
+
+                # Function to open a file in the system
+                def open_file():
+                    filepath = filedialog.askopenfilename(title="Open a Text File", filetypes=(("text    files","*.txt"), ("all files","*.*")))
+                    file = open(filepath,'r')
+                    print('Enjoy the music.')
+                    print(file.readline())
+                    for i in file:
+                        time.sleep(2)
+                        print(i)
+                        time.sleep(5)
+                    # how to exit loop and go back to the choices
+                    file.close()
+                    print('The song ended')
+                    print('Close the dialog to continue.')
+                # Create a button to trigger the dialog
+                button = Button(win, text="Open", command=open_file)
+                button.pack()
+                win.mainloop()
+                return
+        print('No songs found.')
+
+    def delete_song(self, song):
+        if self.head is None:
+            print("No songs found.")
+            return
+
+        if self.head.song == song:
+            self.head = self.head.next
+            print(f"{song} deleted.")
+            return
+
+        current = self.head
+        while current.next is not None:
+            if current.next.song == song:
+                current.next = current.next.next
+                print(f"{song} deleted.")
+                return
+            current = current.next
+
+        print("Song not found.")
+
+song_list = SongList()
+
+while True:
+    print("Choose an option:")
+    print("1. Display all songs")
+    print("2. Add a new song")
+    print("3. Search for a song")
+    print("4. Play a song")
+    print("5. Delete a song")
+    print("6. Quit")
+
+    choice = input("Enter your choice (1-5): ")
+
+    if choice == '1':
+        song_list.display()
+    elif choice == '2':
+        song = input("Enter the song name: ")
+        singer = input("Enter the singer name: ")
+        song_list.add_song(song, singer)
+    elif choice == '3':
+        song = input("Enter the song name: ")
+        song_list.search_song(song)
+    elif choice == '4':
+        song = input("Enter the song name: ")
+        song_list.play_song(song)
+    elif choice == '5':
+        song = input("Enter the song name: ")
+        song_list.delete_song(song)
+    elif choice == '6':
+        break
+    else:
+        print("Invalid choice. Please try again.")
 
